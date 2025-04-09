@@ -46,9 +46,9 @@ class Model:
             # Main model routines
             ##############################
 
+            self.vegetation.Update(co2, temp, sw_rad, vpd, self.soil.soil_water)
 
-
-
+            self.soil.Update(precip, self.vegetation.transpiration)
 
             ##############################
             # Update output
