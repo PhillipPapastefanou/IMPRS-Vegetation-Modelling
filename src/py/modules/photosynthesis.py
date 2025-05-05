@@ -1,6 +1,4 @@
 import numpy as np
-from jupyter_client.adapter import adapt
-
 from src.py.auxil.lookup import LookupTable
 from src.py.auxil.lookup import LookupQ10
 
