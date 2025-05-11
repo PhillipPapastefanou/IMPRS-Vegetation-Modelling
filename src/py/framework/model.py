@@ -7,6 +7,7 @@ from src.py.modules.vegetation import Vegetation
 
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 class Model:
     NDAYS_PER_YEAR = 365
@@ -57,16 +58,29 @@ class Model:
 
     def plot(self):
         df = self.output.data_frame
-        fig = plt.figure(figsize=(8, 8))
-        vars = ['biomass', 'transpiration', 'soil_water', 'npp', 'gs', 'beta']
+        fig = plt.figure(figsize=(10, 10))
+        vars = ['biomass', 'transpiration', 'soil_water', 'npp', 'gs', 'beta', 'phenology']
         units = ['[g m-2]', '[mm m-2 d-1]',
-                 '[% m-2]', '[g m-2 d-1]', '[mol m-2 s-1]', '[-]']
+                 '[% m-2]', '[g m-2 d-1]', '[mol m-2 s-1]', '[-]', '[-]']
 
         for id, var, unit in zip(np.arange(1,len(vars) + 1), vars, units):
-            ax = fig.add_subplot(3, 2, id)
-            ax.plot(df[var])
+            ax = fig.add_subplot(3, 3, id)
+     
             ax.set_ylabel(f"{var} {unit}")
             ax.set_title(var)
+            
+            if var == 'phenology':
+                ax.set_ylim(0.0,1.05)
+                df_obs = pd.read_csv('../data/phen_avg.csv')
+                ax.plot(df_obs['phenology'])
+                
+                phen_mod_series = df[var].values
+                split_data = np.split(phen_mod_series, self.params.nyears)
+                ax.plot(np.arange(0,365.0),np.mean(split_data, axis =0))
+                
+            else:
+                ax.plot(df[var])
+                
 
         plt.subplots_adjust(wspace=0.4, hspace=0.3)
         plt.show()

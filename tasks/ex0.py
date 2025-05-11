@@ -12,7 +12,7 @@ from src.py.framework.parameters import Parameters
 if __name__ == "__main__":
 
     parameters = Parameters()
-    parameters.nyears = 1
+    parameters.nyears = 10
 
     model = Model(parameters)
 
