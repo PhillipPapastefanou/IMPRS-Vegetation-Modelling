@@ -5,14 +5,13 @@
 # Apply the model with standard conditions
 import sys
 sys.path.append("../")
-
 from src.py.framework.model import Model
 from src.py.framework.parameters import Parameters
 
 if __name__ == "__main__":
 
     parameters = Parameters()
-    parameters.nyears = 1
+    parameters.nyears = 2
 
     model = Model(parameters)
 

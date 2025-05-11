@@ -28,7 +28,7 @@ class Parameters:
         self.resp_frac = 0.5
 
         # Medyln 2011 g0 parameter
-        # Minimum stomatal conductance [mol m-2 s-1\
+        # Minimum stomatal conductance [mol m-2 s-1]
         self.g0  = 0.005
 
         # Medlyn 2011 g1 parameter [-]

@@ -32,12 +32,12 @@ start_day = 365 * 2
 end_day   = 365 * 5
 
 # No we can induce some abrupt changes to the forcing...
-model.forcing.df.loc[start_day:end_day, 'precip'] *= 1.0
-model.forcing.df.loc[start_day:end_day, 'co2'] *= 1.0
+#model.forcing.df.loc[start_day:end_day, 'precip'] *= 0.5
+#model.forcing.df.loc[start_day:end_day, 'co2'] *= 1.0
 #model.forcing.df.loc[start_day:end_day, 'vpd'] *= 1.0
 
 #...or some gradual changes
-model.forcing.df.loc[start_day: + end_day, 'co2'] *= np.linspace(1.0, 4.0 ,end_day-start_day)
+# model.forcing.df.loc[start_day: + end_day, 'co2'] *= np.linspace(1.0, 4.0 ,end_day-start_day)
 model.forcing.df.loc[start_day: + end_day, 'precip'] *= np.linspace(1.0, 0.2 ,end_day-start_day)
 # model.forcing.df.loc[start_day: + end_day, 'precip'] *= np.linspace(1.0, 0.1 ,end_day-start_day)
 
