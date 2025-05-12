@@ -72,11 +72,12 @@ class Model:
             if var == 'phenology':
                 ax.set_ylim(0.0,1.05)
                 df_obs = pd.read_csv('../../data/phen_avg.csv')
-                ax.plot(df_obs['phenology'])
+                ax.plot(df_obs['phenology'], c='black', label='obs')
                 
                 phen_mod_series = df[var].values
                 split_data = np.split(phen_mod_series, self.params.nyears)
-                ax.plot(np.arange(0,365.0),np.mean(split_data, axis =0))
+                ax.plot(np.arange(0,365.0),np.mean(split_data, axis =0), c = 'tab:blue', label = 'mod', alpha = 0.7)
+                ax.legend()
                 
             else:
                 ax.plot(df[var])
