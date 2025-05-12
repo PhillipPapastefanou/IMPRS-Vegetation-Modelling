@@ -71,7 +71,7 @@ class Model:
             
             if var == 'phenology':
                 ax.set_ylim(0.0,1.05)
-                df_obs = pd.read_csv('../data/phen_avg.csv')
+                df_obs = pd.read_csv('../../data/phen_avg.csv')
                 ax.plot(df_obs['phenology'])
                 
                 phen_mod_series = df[var].values
