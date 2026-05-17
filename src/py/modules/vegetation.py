@@ -30,6 +30,10 @@ class Vegetation:
         self.transpiration = 0.0
         # Biomass [g C m-2]
         self.biomass = 0.0
+        
+        
+        # Phenology [0.0: No leaves, 1.0 full leaves]
+        self.phenology = 1.0
 
 
 

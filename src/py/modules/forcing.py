@@ -38,7 +38,7 @@ class Forcing:
         self.sw_rad = []
         for i in range(self.nyears):
             sw_rad = (((self.MAX_RAD - self.MIN_RAD)*
-                               (np.sin(2*np.pi/365 *(np.arange(365) - 150))+1)/2) + self.MIN_RAD)
+                               (np.sin(2*np.pi/365 *(np.arange(365) - 100))+1)/2) + self.MIN_RAD)
             sw_rad += np.random.uniform(-50, 100, 365)
 
             self.sw_rad.append(sw_rad)
@@ -76,7 +76,7 @@ class Forcing:
         self.temp = []
         for i in range(self.nyears):
             temp_per_month = (((self.MAX_TEMP - self.MIN_TEMP)*
-                               (np.sin(2*np.pi/365 *(np.arange(365) - 150))+1)/2) + self.MIN_TEMP)
+                               (np.sin(2*np.pi/365 *(np.arange(365) - 100))+1)/2) + self.MIN_TEMP)
             temp_per_month += np.random.uniform(-4, 4, 365)
 
             self.temp.append(temp_per_month)

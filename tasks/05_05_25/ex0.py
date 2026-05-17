@@ -11,6 +11,7 @@ from src.py.framework.parameters import Parameters
 if __name__ == "__main__":
 
     parameters = Parameters()
+    
     parameters.nyears = 2
 
     model = Model(parameters)
