@@ -1,3 +1,4 @@
+
 from src.py.modules.photosynthesis import Photosynthesis
 
 phot = Photosynthesis()

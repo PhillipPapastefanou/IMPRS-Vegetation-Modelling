@@ -5,6 +5,10 @@ from src.py.modules.forcing import Forcing
 from src.py.modules.soil import Soil
 from src.py.modules.vegetation import Vegetation
 
+import os
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -71,7 +75,7 @@ class Model:
             
             if var == 'phenology':
                 ax.set_ylim(0.0,1.05)
-                df_obs = pd.read_csv('../../data/phen_avg.csv')
+                df_obs = pd.read_csv(os.path.join(script_dir, os.pardir, os.pardir, os.pardir, 'data', 'phen_avg.csv'))
                 ax.plot(df_obs['phenology'], c='black', label='obs')
                 
                 phen_mod_series = df[var].values
