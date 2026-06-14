@@ -37,7 +37,11 @@ class Vegetation:
 
 
 
-    def Update(self, co2, temp, sw_rad, vpd, soil_water):
+
+    def Update(self, co2, temp, sw_rad, vpd, soil_water, t):
+
+        
+
 
         # Max gross primary productivity [g C m-2 day-1]
         self.gpp_max = self.photosynthesis.Update(co2 = co2,
@@ -47,7 +51,7 @@ class Vegetation:
                                    fpar = 0.5,
                                    chi = 0.7)
 
-        # Maxn net primary productivity [g C m-2 day-1]
+        # Max net primary productivity [g C m-2 day-1]
         self.npp_max = self.gpp_max * (1.0 - self.parameters.resp_frac)
 
 
@@ -65,6 +69,7 @@ class Vegetation:
 
         # Calculate net productivity [g day-1 m-2]
         self.npp = self.npp_max * self.beta
+        
 
         # Growth
         self.biomass = self.biomass + self.npp

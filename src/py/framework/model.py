@@ -51,7 +51,7 @@ class Model:
             # Main model routines
             ##############################
 
-            self.vegetation.Update(co2, temp, sw_rad, vpd, self.soil.soil_water)
+            self.vegetation.Update(co2, temp, sw_rad, vpd, self.soil.soil_water, t)
 
             self.soil.Update(precip, self.vegetation.transpiration)
 
@@ -78,9 +78,20 @@ class Model:
                 df_obs = pd.read_csv(os.path.join(script_dir, os.pardir, os.pardir, os.pardir, 'data', 'phen_avg.csv'))
                 ax.plot(df_obs['phenology'], c='black', label='obs')
                 
-                phen_mod_series = df[var].values
-                split_data = np.split(phen_mod_series, self.params.nyears)
-                ax.plot(np.arange(0,365.0),np.mean(split_data, axis =0), c = 'tab:blue', label = 'mod', alpha = 0.7)
+                # 365 day average phenology from obs
+                obs_365 = df_obs['phenology'].values
+                
+                # Change dimensionalty of modelled timeseries (1 -> 2) 
+                mod_series = np.split(self.output.data_frame['phenology'], self.params.nyears)
+                # 365 day average phenology from model
+                mod_365 = np.mean(mod_series, axis=0)
+                
+                # Mean squared error
+                mse = 1/365*np.sum((mod_365-obs_365)**2)
+                
+                ax.plot(np.arange(0,365.0), mod_365, c = 'tab:blue', label = 'mod', alpha = 0.7)
+                ax.text(400, 0.9, f"MSE: {mse}")
+
                 ax.legend()
                 
             else:
