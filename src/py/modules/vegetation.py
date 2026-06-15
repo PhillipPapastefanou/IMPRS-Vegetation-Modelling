@@ -36,6 +36,15 @@ class Vegetation:
         self.phenology = 1.0
 
 
+        # Stand level heart wood [g C m-2] 
+        self.heart_wood = 0.0
+        # Stand level sap wood [g C m-2]         
+        self.sap_wood = 0.0
+        
+        # Stem diameter at breast height [m]
+        self.dbh = 0.0
+        # Tree trunk height [m]
+        self.height  = 0.0
 
 
     def Update(self, co2, temp, sw_rad, vpd, soil_water, t):
@@ -68,12 +77,44 @@ class Vegetation:
         self.transpiration = self.transpiration * self.parameters.day_length / self.HOURS_PER_DAY
 
         # Calculate net productivity [g day-1 m-2]
-        self.npp = self.npp_max * self.beta
-        
-
+        self.npp = self.npp_max * self.beta 
+    
         # Growth
-        self.biomass = self.biomass + self.npp
+        #self.biomass = self.biomass + self.npp
+        
+        # e.g., 0.05 trees/m2 = 500 trees per hectare
+        stem_density_trees_m2 = 0.05
+        
+        # Fraction of sapwood that turns into heartwood per year
+        turnover_rate_annual = 0.1 
+        turnover_rate_daily = turnover_rate_annual / 365.0
+        
+        sap_allocation_frac = 0.45  # Fraction of npp that goes into sapwood
+        wood_dens_g_m3 = 578000.0   # wood density
+        form_factor = 0.8           # Paraboloid stem
+        k1 = 35.0                   # Allometric multiplier
+        k2 = 0.6                    # Allometric exponent
 
+        # Turnover: Sapwood to Heartwood (All pools in g m-2 ground)
+        sap_turnover = self.sap_wood * turnover_rate_daily
+        self.sap_wood = self.sap_wood - sap_turnover
+        self.heart_wood += sap_turnover
+        
+        # Allocation: Direct addition since both NPP and pools are per m2 ground
+        self.sap_wood += self.npp * sap_allocation_frac
+        
+        # Total stand-level structural mass (g m-2 ground)
+        stand_woody_mass_g_m2 = self.sap_wood + self.heart_wood 
+        
+        # Convert the mass toa single average tree (g / tree)
+        individual_tree_mass_g = stand_woody_mass_g_m2 / stem_density_trees_m2
+        
+        # Calculate DBH of that representative tree (in meters)
+        self.dbh = ((individual_tree_mass_g * 4.0) / 
+                    (wood_dens_g_m3 * form_factor * np.pi * k1)) ** (1.0 / (2.0 + k2))      
+        
+        # Height comes directly from the allometric relationship
+        self.height = k1 * (self.dbh ** k2)    
 
     def calc_beta(self, soil_water):
         return 1 / (1 + np.exp( - self.parameters.plant_sw_alpha*(soil_water - self.parameters.plant_sw_close_50)))

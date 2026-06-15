@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     parameters = Parameters()
     
-    parameters.nyears = 1
+    parameters.nyears = 50
     
 
     model = Model(parameters)

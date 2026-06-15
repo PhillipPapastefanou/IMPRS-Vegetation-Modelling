@@ -63,9 +63,9 @@ class Model:
     def plot(self):
         df = self.output.data_frame
         fig = plt.figure(figsize=(10, 10))
-        vars = ['biomass', 'transpiration', 'soil_water', 'npp', 'gs', 'beta', 'phenology']
+        vars = ['biomass', 'transpiration', 'soil_water', 'npp', 'gs', 'beta', 'phenology', 'height', 'dbh']
         units = ['[g m-2]', '[mm m-2 d-1]',
-                 '[% m-2]', '[g m-2 d-1]', '[mol m-2 s-1]', '[-]', '[-]']
+                 '[% m-2]', '[g m-2 d-1]', '[mol m-2 s-1]', '[-]', '[-]', '[m]', '[m]']
 
         for id, var, unit in zip(np.arange(1,len(vars) + 1), vars, units):
             ax = fig.add_subplot(3, 3, id)
@@ -97,7 +97,6 @@ class Model:
             else:
                 ax.plot(df[var])
                 
-
         plt.subplots_adjust(wspace=0.4, hspace=0.3)
         plt.show()
 

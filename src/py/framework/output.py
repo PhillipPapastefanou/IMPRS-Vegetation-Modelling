@@ -25,6 +25,8 @@ class Output:
         self.data_frame.loc[t, 'transpiration'] = self.vegetation.transpiration
         self.data_frame.loc[t, 'npp'] = self.vegetation.npp
         self.data_frame.loc[t, 'phenology'] = self.vegetation.phenology
+        self.data_frame.loc[t, 'height'] = self.vegetation.height
+        self.data_frame.loc[t, 'dbh'] = self.vegetation.dbh
         
         
         
